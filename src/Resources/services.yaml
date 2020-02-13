@@ -1,0 +1,3 @@
+services:
+    Ardenexal\FormHandler\FormHandlerFactory:
+      arguments: ['@form.factory', '@service_container']

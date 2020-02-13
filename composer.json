@@ -1,0 +1,53 @@
+{
+  "name": "ardenexal/symfony-form-handler",
+  "description": "Symfony form handler",
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "require": {
+    "php": "^7.2.5",
+    "ext-ctype": "*",
+    "ext-iconv": "*",
+    "symfony/flex": "^1.3.1",
+    "symfony/form": "^3.0|^4.0",
+    "symfony/framework-bundle": "^3.0|^4.0",
+    "symfony/yaml": "^3.0|^4.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
+  },
+  "config": {
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Ardenexal\\FormHandler\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "replace": {
+    "paragonie/random_compat": "2.*",
+    "symfony/polyfill-ctype": "*",
+    "symfony/polyfill-iconv": "*",
+    "symfony/polyfill-php72": "*",
+    "symfony/polyfill-php71": "*",
+    "symfony/polyfill-php70": "*",
+    "symfony/polyfill-php56": "*"
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "archive": {
+    "exclude": [
+      "/test"
+    ]
+  }
+}
