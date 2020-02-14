@@ -4,7 +4,7 @@
 namespace Ardenexal\FormHandler;
 
 
-use FormHandler\Exception\FormHandlerNotValidException;
+use Ardenexal\FormHandler\Exception\FormHandlerNotValidException;
 use LogicException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FormHandlerFactory
 {
     /**
-     * @var FormBuilderInterface
+     * @var FormFactoryInterface
      */
     private $formFactory;
     /**
@@ -68,9 +68,9 @@ class FormHandlerFactory
      *
      * @param Request $request
      *
-     * @return Response
+     * @return Response|null
      */
-    public function handle(Request $request): Response
+    public function handle(Request $request): ?Response
     {
         if (!$this->form instanceof FormInterface) {
             throw new LogicException('Form must be created before handling request');
@@ -87,5 +87,13 @@ class FormHandlerFactory
         }
 
         return $this->formHandler->onError($this->form->getData(), $this->form, $request);
+    }
+
+    /**
+     * @return FormInterface
+     */
+    public function getForm(): FormInterface
+    {
+        return $this->form;
     }
 }

@@ -34,15 +34,15 @@ class FormHandlerAbstract implements FormHandlerInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return null;
     }
 
     /**
-     * @param               $formObject
+     * @param mixed         $formObject
      * @param FormInterface $form
      * @param Request       $request
      *
@@ -54,7 +54,7 @@ class FormHandlerAbstract implements FormHandlerInterface
     }
 
     /**
-     * @param               $formObject
+     * @param mixed         $formObject
      * @param FormInterface $form
      * @param Request       $request
      *

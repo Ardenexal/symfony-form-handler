@@ -8,6 +8,11 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Interface FormHandlerInterface
+ *
+ * @package Ardenexal\FormHandler
+ */
 interface FormHandlerInterface
 {
     /**
@@ -26,16 +31,16 @@ interface FormHandlerInterface
     public function getName(): ?string;
 
     /**
-     * @param               $formObject
+     * @param mixed         $formObject
      * @param FormInterface $form
      * @param Request       $request
      *
      * @return Response
      */
-    public function onSuccess($formObject, FormInterface $form, Request $request);
+    public function onSuccess($formObject, FormInterface $form, Request $request): Response;
 
     /**
-     * @param               $formObject
+     * @param mixed         $formObject
      * @param FormInterface $form
      * @param Request       $request
      *
