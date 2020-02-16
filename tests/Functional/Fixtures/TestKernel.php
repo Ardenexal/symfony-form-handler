@@ -6,23 +6,14 @@ namespace Tests\Functional\Fixtures;
 
 use Ardenexal\FormHandler\FormHandlerBundle;
 use Ardenexal\FormHandler\FormHandlerFactory;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 
 class TestKernel extends Kernel
 {
-    private $config_file;
-
-    public function __construct(array $options)
-    {
-        $this->config_file = $options['config_file'] ?? 'config.yml';
-
-        parent::__construct(
-            $options['environment'] ?? 'test',
-            $options['debug'] ?? true
-        );
-    }
 
     /**
      * {@inheritdoc}
@@ -30,41 +21,17 @@ class TestKernel extends Kernel
     public function registerBundles()
     {
         return array(
-            new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new TwigBundle(),
+            new FrameworkBundle(),
             new FormHandlerBundle(),
         );
     }
 
     /**
-     * {@inheritdoc}
-     * @throws \Exception
+     * Loads the container configuration.
      */
-    public function registerContainerConfiguration(LoaderInterface $loader): void
+    public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . "/config/{$this->config_file}");
+        $loader->load(__DIR__ . "/config/services.yaml");
     }
-
-    protected function prepareContainer(ContainerBuilder $container)
-    {
-        parent::prepareContainer($container);
-
-        $container->findDefinition(FormHandlerFactory::class)->setPublic(true);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCacheDir()
-    {
-        return __DIR__ . '/../../../var/cache/' . md5($this->getEnvironment() . $this->config_file);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getLogDir()
-    {
-        return __DIR__ . '/../../../var/logs';
-    }
-
 }

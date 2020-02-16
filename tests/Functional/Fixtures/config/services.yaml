@@ -1,0 +1,3 @@
+services:
+    Tests\Functional\Fixtures\TestFormHandler:
+        public: true

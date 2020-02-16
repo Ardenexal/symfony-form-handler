@@ -67,32 +67,6 @@ class FormHandlerFactory implements FormHandlerFactoryInterface
     }
 
     /**
-     * Handler Form request
-     *
-     * @param Request $request
-     *
-     * @return Response|null
-     */
-    public function handle(Request $request): ?Response
-    {
-        if (!$this->form instanceof FormInterface) {
-            throw new LogicException('Form must be created before handling request');
-        }
-
-        $this->form->handleRequest($request);
-
-        if ($this->form->isSubmitted() === false) {
-            return null;
-        }
-
-        if ($this->form->isValid() === true) {
-            return $this->formHandler->onSuccess($this->form->getData(), $this->form, $request);
-        }
-
-        return $this->formHandler->onError($this->form->getData(), $this->form, $request);
-    }
-
-    /**
      * @return FormInterface
      */
     public function getForm(): FormInterface

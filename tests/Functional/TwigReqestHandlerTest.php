@@ -7,13 +7,14 @@ namespace Tests\Functional;
 use Ardenexal\FormHandler\FormHandlerFactory;
 use Ardenexal\FormHandler\FormHandlerFactoryInterface;
 use Ardenexal\FormHandler\FormHandlerInterface;
+use Ardenexal\FormHandler\RequestHandler\TwigRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormInterface;
 use Tests\Functional\Fixtures\TestData;
 use Tests\Functional\Fixtures\TestFormHandler;
 use Tests\Functional\Fixtures\TestKernel;
 
-class FormHandlerFactoryTest extends KernelTestCase
+class TwigReqestHandlerTest extends KernelTestCase
 {
     /**
      * BC for current tests, new tests should get their own config.
@@ -31,12 +32,11 @@ class FormHandlerFactoryTest extends KernelTestCase
 
     public function testServiceExists(): void
     {
-        $handler_factory = self::$container->get(FormHandlerFactory::class);
-
-        $handler = $handler_factory->create(TestFormHandler::class, new TestData());
+        $handler = self::$container->get(TwigRequestHandler::class);
 
 
-        self::assertInstanceOf(FormHandlerFactoryInterface::class, $handler);
+
+        self::assertInstanceOf(TwigRequestHandler::class, $handler);
     }
 
     public function testFactoryReturnsValid(): void

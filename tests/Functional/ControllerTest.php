@@ -4,7 +4,9 @@
 namespace Tests\Functional;
 
 
+use Ardenexal\FormHandler\FormHandlerFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Tests\Functional\Fixtures\TestKernel;
 
@@ -15,14 +17,24 @@ class ControllerTest extends WebTestCase
     /**
      * BC for current tests, new tests should get their own config.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
+        parent::setUp();
         $this->test_client = static::createClient();
     }
 
     protected static function createKernel(array $options = array())
     {
-        return new TestKernel($options);
+        return new TestKernel('test', true);
+    }
+
+    public function testFormHandlerFactoryServiceExists()
+    {
+        $kernel = $this->test_client;
+        /** @var ContainerInterface $container */
+        $container          = $kernel->getContainer();
+        $formHandlerFactory = $container->get(FormHandlerFactory::class);
+        $this->assertInstanceOf(FormHandlerFactory::class, $formHandlerFactory);
     }
 
     public function testActionInterfaceDependencyInjection()

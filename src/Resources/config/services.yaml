@@ -1,0 +1,8 @@
+services:
+  Ardenexal\FormHandler\FormHandlerFactory:
+    arguments: ['@form.factory', '@service_container']
+    public: true
+
+  Ardenexal\FormHandler\RequestHandler\TwigRequestHandler:
+    arguments: ['@service_container']
+    public: true
