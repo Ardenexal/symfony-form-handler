@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Interface FormHandlerInterface
+ * Interface RequestHandlerInterface
  *
  * @package Ardenexal\FormHandler
  */

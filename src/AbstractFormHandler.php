@@ -11,11 +11,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class FormHandlerAbstract
+ * Class AbstractFormHandler
  *
  * @package Ardenexal\FormHandler
  */
-class FormHandlerAbstract implements FormHandlerInterface
+class AbstractFormHandler implements FormHandlerInterface
 {
     /**
      * @return string
