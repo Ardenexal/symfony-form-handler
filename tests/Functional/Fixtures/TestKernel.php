@@ -29,9 +29,13 @@ class TestKernel extends Kernel
 
     /**
      * Loads the container configuration.
+     *
+     * @param LoaderInterface $loader
+     *
+     * @throws \Exception
      */
-    public function registerContainerConfiguration(LoaderInterface $loader)
+    public function registerContainerConfiguration(LoaderInterface $loader): void
     {
-        $loader->load(__DIR__ . "/config/services.yaml");
+        $loader->load(__DIR__ . '/config/services.yaml');
     }
 }

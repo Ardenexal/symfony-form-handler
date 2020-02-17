@@ -9,7 +9,7 @@
 >
 
     <php>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="0"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled=1"/>
     </php>
     <testsuites>
         <testsuite name="Ardenexal Symfony Form Handler">
@@ -24,6 +24,6 @@
     </filter>
 
     <listeners>
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
     </listeners>
 </phpunit>
