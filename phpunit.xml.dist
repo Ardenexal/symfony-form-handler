@@ -8,6 +8,9 @@
          bootstrap="vendor/autoload.php"
 >
 
+    <php>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="0"/>
+    </php>
     <testsuites>
         <testsuite name="Ardenexal Symfony Form Handler">
             <directory>tests</directory>
