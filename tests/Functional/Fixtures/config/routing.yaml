@@ -1,0 +1,4 @@
+app_action:
+  path: /
+  defaults:
+    _controller: 'Tests\Functional\Fixtures\TestController::testAction'

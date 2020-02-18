@@ -1,3 +1,23 @@
 services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+
     Tests\Functional\Fixtures\TestFormHandler:
-        public: true
+        tags: ['form.handler']
+
+    Tests\Functional\Fixtures\TestController:
+        tags: ['controller.service_arguments']
+framework:
+    test: true
+    secret: test
+    router:
+        resource: '%kernel.root_dir%/config/routing.yaml'
+    form: true
+    validation:
+        enable_annotations: true
+
+twig:
+    # ...
+    paths:
+        'tests\Functional\Fixtures\templates': ~

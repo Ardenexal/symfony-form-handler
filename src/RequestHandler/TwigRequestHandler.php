@@ -53,7 +53,7 @@ class TwigRequestHandler implements RequestHandlerInterface
         /*
          * The form will not be submitted on a GET request
          */
-        if ($form->isSubmitted() === false) {
+        if ($request->isMethod('GET')) {
             $viewData = [];
             if (array_key_exists('template', $options) === false) {
                 throw new \RuntimeException('Must include template in options to render twig template');
@@ -68,11 +68,13 @@ class TwigRequestHandler implements RequestHandlerInterface
             return new Response($this->renderForm($form, $template, $viewData));
         }
 
-        if ($form->isValid() === true) {
-            return $formHandler->onSuccess($form->getData(), $form, $request);
-        }
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                return $formHandler->onSuccess($form->getData(), $form, $request);
+            }
 
-        return $formHandler->onError($form->getData(), $form, $request);
+            return $formHandler->onError($form->getData(), $form, $request);
+        }
     }
 
     /**

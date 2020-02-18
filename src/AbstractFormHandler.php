@@ -5,6 +5,8 @@ namespace Ardenexal\FormHandler;
 
 
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +40,7 @@ class AbstractFormHandler implements FormHandlerInterface
      */
     public function getName(): ?string
     {
-        return null;
+        return '';
     }
 
     /**
@@ -62,6 +64,32 @@ class AbstractFormHandler implements FormHandlerInterface
      */
     public function onError($formObject, FormInterface $form, Request $request): Response
     {
-        return new JsonResponse($form->getErrors(), Response::HTTP_BAD_REQUEST);
+        return new JsonResponse($this->getFormErrors($form), Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return array
+     */
+    protected function getFormErrors(FormInterface $form): array
+    {
+        $errors = array();
+
+        /** @var FormError $error */
+        foreach ($form->getErrors() as $error) {
+            $errors[$form->getName()][] = $error->getMessage();
+        }
+
+        // Fields
+        foreach ($form as $child/** @var FormInterface $child */) {
+            if ($child->isSubmitted() && !$child->isValid()) {
+                foreach ($child->getErrors() as $error) {
+                    $errors[$child->getName()][] = $error->getMessage();
+                }
+            }
+        }
+
+        return $errors;
     }
 }

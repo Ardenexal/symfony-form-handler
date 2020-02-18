@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class FormHandlerExtension extends Extension
 {
 
+
     /**
      * Loads a specific configuration.
      *
@@ -27,14 +28,6 @@ class FormHandlerExtension extends Extension
         $this->processConfiguration($configuration, $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
-
-        $tagged_services = array_keys($container->findTaggedServiceIds('form.handler'));
-
-        foreach ($tagged_services as $id) {
-            $container->getDefinition($id)->setPublic(true);
-
-
-        }
 
         // If auto configuring is available, register tags for the Handler Types.
         if (method_exists($container, 'registerForAutoconfiguration')) {

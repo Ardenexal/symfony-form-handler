@@ -40,6 +40,8 @@ class TestController
     {
         $factory = $this->formHandlerFactory->create(TestFormHandler::class, new TestData());
 
-        return $this->handler->handle($request, $factory);
+        return $this->handler->handle($request, $factory,[
+            'template'=>'test.twig'
+        ]);
     }
 }
