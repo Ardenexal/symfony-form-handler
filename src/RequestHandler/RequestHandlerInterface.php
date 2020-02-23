@@ -4,7 +4,7 @@
 namespace Ardenexal\FormHandler\RequestHandler;
 
 
-use Ardenexal\FormHandler\FormHandlerFactoryInterface;
+use Ardenexal\FormHandler\ResolvedFormHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,11 +16,11 @@ use Symfony\Component\HttpFoundation\Response;
 interface RequestHandlerInterface
 {
     /**
-     * @param Request                     $request
+     * @param Request             $request
      *
-     * @param FormHandlerFactoryInterface $formHandlerFactory
+     * @param ResolvedFormHandler $resolvedFormHandler
      *
      * @return Response
      */
-    public function handle(Request $request, FormHandlerFactoryInterface $formHandlerFactory): Response;
+    public function buildResponse(Request $request, ResolvedFormHandler $resolvedFormHandler): Response;
 }

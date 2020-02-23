@@ -6,3 +6,7 @@ services:
   Ardenexal\FormHandler\RequestHandler\TwigRequestHandler:
     arguments: ['@service_container']
     public: true
+
+  Ardenexal\FormHandler\RequestHandler\RestRequestHandler:
+    arguments: ['@service_container']
+    public: true

@@ -5,6 +5,7 @@ namespace Ardenexal\FormHandler\RequestHandler;
 
 
 use Ardenexal\FormHandler\FormHandlerFactoryInterface;
+use Ardenexal\FormHandler\ResolvedFormHandler;
 use LogicException;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -29,21 +30,24 @@ class TwigRequestHandler implements RequestHandlerInterface
     }
 
     /**
-     * @param Request                     $request
+     * @param Request             $request
      *
-     * @param FormHandlerFactoryInterface $formHandlerFactory
+     * @param ResolvedFormHandler $resolvedResolvedFormHandler
      *
-     * @param array                       $options
+     * @param array               $options
      *
      * @return Response
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function handle(Request $request, FormHandlerFactoryInterface $formHandlerFactory, array $options = []): Response
+    public function buildResponse(
+        Request $request,
+        ResolvedFormHandler $resolvedResolvedFormHandler,
+        array $options = []): Response
     {
-        $form        = $formHandlerFactory->getForm();
-        $formHandler = $formHandlerFactory->getFormHandler();
+        $form        = $resolvedResolvedFormHandler->getForm();
+        $formHandler = $resolvedResolvedFormHandler->getFormHandler();
         if (!$form instanceof FormInterface) {
             throw new LogicException('Form must be created before handling request');
         }
@@ -53,21 +57,8 @@ class TwigRequestHandler implements RequestHandlerInterface
         /*
          * The form will not be submitted on a GET request
          */
-        if ($request->isMethod('GET')) {
-            $viewData = [];
-            if (array_key_exists('template', $options) === false) {
-                throw new \RuntimeException('Must include template in options to render twig template');
-            }
 
-            if (array_key_exists('viewData', $options) === true) {
-                $viewData = $options['viewData'];
-            }
-
-            $template = $options['template'];
-
-            return new Response($this->renderForm($form, $template, $viewData));
-        }
-
+        // If form is submitted it will be a POST request
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 return $formHandler->onSuccess($form->getData(), $form, $request);
@@ -76,7 +67,19 @@ class TwigRequestHandler implements RequestHandlerInterface
             return $formHandler->onError($form->getData(), $form, $request);
         }
 
-        throw new \RuntimeException('Form could not be processed');
+        // If form has not been submitted then it will be a GET request
+        $viewData = [];
+        if (array_key_exists('template', $options) === false) {
+            throw new \RuntimeException('Must include template in options to render twig template');
+        }
+
+        if (array_key_exists('viewData', $options) === true) {
+            $viewData = $options['viewData'];
+        }
+
+        $template = $options['template'];
+
+        return new Response($this->renderForm($form, $template, $viewData));
     }
 
     /**

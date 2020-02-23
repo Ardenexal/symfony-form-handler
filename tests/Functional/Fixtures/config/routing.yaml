@@ -1,4 +1,23 @@
 app_action:
-  path: /
+  path: /twig
   defaults:
-    _controller: 'Tests\Functional\Fixtures\TestController::testAction'
+    _controller: 'Tests\Functional\Fixtures\TestTwigController::testAction'
+
+
+rest_get_action:
+  path: /rest
+  methods: GET
+  defaults:
+    _controller: 'Tests\Functional\Fixtures\TestRestController::getTest'
+
+rest_post_action:
+  path: /rest
+  methods: POST
+  defaults:
+    _controller: 'Tests\Functional\Fixtures\TestRestController::postTest'
+
+rest_put_action:
+  path: /rest/{testId}
+  methods: PUT|PATCH
+  defaults:
+    _controller: 'Tests\Functional\Fixtures\TestRestController::putTest'

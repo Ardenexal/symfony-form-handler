@@ -10,7 +10,7 @@ use Ardenexal\FormHandler\FormHandlerInterface;
 use Ardenexal\FormHandler\RequestHandler\TwigRequestHandler;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormInterface;
-use Tests\Functional\Fixtures\TestData;
+use Tests\Functional\Fixtures\TestValueObject;
 use Tests\Functional\Fixtures\TestFormHandler;
 use Tests\Functional\Fixtures\TestKernel;
 
@@ -43,7 +43,7 @@ class TwigReqestHandlerTest extends KernelTestCase
     {
         $handler_factory = self::$container->get(FormHandlerFactory::class);
 
-        $handler = $handler_factory->create(TestFormHandler::class, new TestData());
+        $handler = $handler_factory->create(TestFormHandler::class, new TestValueObject());
 
 
         self::assertInstanceOf(FormHandlerInterface::class, $handler->getFormHandler());

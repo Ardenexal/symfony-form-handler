@@ -5,13 +5,13 @@ namespace Tests\Functional;
 
 
 use Ardenexal\FormHandler\FormHandlerFactory;
-use Ardenexal\FormHandler\FormHandlerFactoryInterface;
 use Ardenexal\FormHandler\FormHandlerInterface;
+use Ardenexal\FormHandler\ResolvedFormHandler;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Form\FormInterface;
-use Tests\Functional\Fixtures\TestData;
 use Tests\Functional\Fixtures\TestFormHandler;
 use Tests\Functional\Fixtures\TestKernel;
+use Tests\Functional\Fixtures\TestValueObject;
 
 class FormHandlerFactoryTest extends KernelTestCase
 {
@@ -29,24 +29,30 @@ class FormHandlerFactoryTest extends KernelTestCase
         return new TestKernel('test', true);
     }
 
+    /**
+     * @throws \Ardenexal\FormHandler\Exception\FormHandlerNotValidException
+     */
     public function testServiceExists(): void
     {
         $handler_factory = self::$container->get(FormHandlerFactory::class);
 
-        $handler = $handler_factory->create(TestFormHandler::class, new TestData());
+        $resolvedFormHandler = $handler_factory->create(TestFormHandler::class, new TestValueObject());
 
 
-        self::assertInstanceOf(FormHandlerFactoryInterface::class, $handler);
+        self::assertInstanceOf(ResolvedFormHandler::class, $resolvedFormHandler);
     }
 
+    /**
+     * @throws \Ardenexal\FormHandler\Exception\FormHandlerNotValidException
+     */
     public function testFactoryReturnsValid(): void
     {
         $handler_factory = self::$container->get(FormHandlerFactory::class);
 
-        $handler = $handler_factory->create(TestFormHandler::class, new TestData());
+        $resolvedFormHandler = $handler_factory->create(TestFormHandler::class, new TestValueObject());
 
 
-        self::assertInstanceOf(FormHandlerInterface::class, $handler->getFormHandler());
-        self::assertInstanceOf(FormInterface::class, $handler->getForm());
+        self::assertInstanceOf(FormHandlerInterface::class, $resolvedFormHandler->getFormHandler());
+        self::assertInstanceOf(FormInterface::class, $resolvedFormHandler->getForm());
     }
 }

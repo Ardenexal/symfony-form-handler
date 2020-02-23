@@ -4,7 +4,7 @@
 namespace Tests\Functional\Fixtures;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class TestData
+class TestValueObject
 {
     /**
      * @Assert\NotBlank()

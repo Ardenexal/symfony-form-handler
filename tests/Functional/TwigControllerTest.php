@@ -7,11 +7,10 @@ namespace Tests\Functional;
 use Ardenexal\FormHandler\FormHandlerFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpKernel\Kernel;
 use Tests\Functional\Fixtures\TestKernel;
 
-class ControllerTest extends WebTestCase
+class TwigControllerTest extends WebTestCase
 {
     private $test_client;
 
@@ -44,7 +43,7 @@ class ControllerTest extends WebTestCase
             self::markTestSkipped(sprintf('Symfony version %s not supported by test', Kernel::VERSION));
         }
 
-        $crawler = $this->test_client->request('GET', '/');
+        $crawler = $this->test_client->request('GET', '/twig');
 
         self::assertSame('Test Submit', $crawler->text());
     }
@@ -55,7 +54,7 @@ class ControllerTest extends WebTestCase
         self::markTestSkipped(sprintf('Symfony version %s not supported by test', Kernel::VERSION));
     }
 
-    $this->test_client->request('GET', '/');
+    $this->test_client->request('POST', '/twig');
     $this->test_client->submitForm('Submit', [
         'test' => 'test',
     ]);
@@ -67,7 +66,7 @@ class ControllerTest extends WebTestCase
             self::markTestSkipped(sprintf('Symfony version %s not supported by test', Kernel::VERSION));
         }
 
-        $this->test_client->request('GET', '/');
+        $this->test_client->request('POST', '/twig');
         $this->test_client->submitForm('Submit', [
         ]);
         self::assertResponseStatusCodeSame(400);

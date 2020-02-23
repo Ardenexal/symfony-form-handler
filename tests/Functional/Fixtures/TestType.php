@@ -19,7 +19,7 @@ class TestType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-                                   'data_class' => TestData::class,
+                                   'data_class' => TestValueObject::class,
                                ]);
     }
 }

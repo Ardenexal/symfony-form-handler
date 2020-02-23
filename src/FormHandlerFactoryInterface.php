@@ -13,17 +13,7 @@ interface FormHandlerFactoryInterface
      *
      * @param object $valueObject - Form data to set defaults and sync form with
      *
-     * @return FormHandlerFactoryInterface
+     * @return ResolvedFormHandler
      */
-    public function create(string $class, object $valueObject): FormHandlerFactoryInterface;
-
-    /**
-     * @return FormInterface
-     */
-    public function getForm(): FormInterface;
-
-    /**
-     * @return FormHandlerInterface
-     */
-    public function getFormHandler(): FormHandlerInterface;
+    public function create(string $class, object $valueObject): ResolvedFormHandler;
 }

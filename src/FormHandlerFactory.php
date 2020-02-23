@@ -5,12 +5,9 @@ namespace Ardenexal\FormHandler;
 
 
 use Ardenexal\FormHandler\Exception\FormHandlerNotValidException;
-use LogicException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FormHandlerFactory
@@ -46,11 +43,10 @@ class FormHandlerFactory implements FormHandlerFactoryInterface
      *
      * @param object $valueObject - Form data to set defaults and sync form with
      *
-     * @return FormHandlerFactory
+     * @return ResolvedFormHandler
      * @throws FormHandlerNotValidException
-     *
      */
-    public function create(string $class, object $valueObject): FormHandlerFactoryInterface
+    public function create(string $class, object $valueObject): ResolvedFormHandler
     {
         $formHandler = $this->container->get($class);
         if (!$formHandler instanceof FormHandlerInterface) {
@@ -63,22 +59,6 @@ class FormHandlerFactory implements FormHandlerFactoryInterface
             $this->form = $this->formFactory->create($formHandler->getFormType(), $valueObject, $formHandler->getOptions());
         }
 
-        return $this;
-    }
-
-    /**
-     * @return FormInterface
-     */
-    public function getForm(): FormInterface
-    {
-        return $this->form;
-    }
-
-    /**
-     * @return FormHandlerInterface
-     */
-    public function getFormHandler(): FormHandlerInterface
-    {
-        return $this->formHandler;
+        return new ResolvedFormHandler($this->form, $formHandler);
     }
 }

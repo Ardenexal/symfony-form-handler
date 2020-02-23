@@ -6,7 +6,9 @@ services:
     Tests\Functional\Fixtures\TestFormHandler:
         tags: ['form.handler']
 
-    Tests\Functional\Fixtures\TestController:
+    Tests\Functional\Fixtures\TestTwigController:
+        tags: ['controller.service_arguments']
+    Tests\Functional\Fixtures\TestRestController:
         tags: ['controller.service_arguments']
 framework:
     test: true
