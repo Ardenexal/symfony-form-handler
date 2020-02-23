@@ -75,6 +75,8 @@ class TwigRequestHandler implements RequestHandlerInterface
 
             return $formHandler->onError($form->getData(), $form, $request);
         }
+
+        throw new \RuntimeException('Form could not be processed');
     }
 
     /**

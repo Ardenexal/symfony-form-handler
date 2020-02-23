@@ -7,9 +7,12 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class FormHandlerBundle extends Bundle
 {
-public function build(ContainerBuilder $container)
-{
-    parent::build($container);
-    $container->addCompilerPass(new DependencyInjection\Compiler\FormHandlerCompiler());
-}
+    /**
+     * @param ContainerBuilder $container
+     */
+    public function build(ContainerBuilder $container): void
+    {
+        parent::build($container);
+        $container->addCompilerPass(new DependencyInjection\Compiler\FormHandlerCompiler());
+    }
 }

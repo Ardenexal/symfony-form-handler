@@ -40,7 +40,8 @@
     }
   },
   "scripts": {
-    "test": "bin/phpunit"
+    "test": "bin/phpunit",
+    "analyse": "vendor/bin/phpstan analyse"
   },
   "replace": {
     "paragonie/random_compat": "2.*",
